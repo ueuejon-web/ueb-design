@@ -1,0 +1,1240 @@
+/* 
+   Uebu.Design Pixel Layout 
+   Original Asset Based Remaster
+*/
+
+:root {
+    --navy-center: #001d4a;
+    --navy-edge: #000c1e;
+    --grid-line: rgba(0, 150, 255, 0.12);
+    --gold: #ff9b00;
+    --font-pixel: 'DotGothic16', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    image-rendering: auto; /* Fallback */
+    image-rendering: pixelated;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--navy-edge);
+    font-family: var(--font-pixel);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-x: hidden;
+    padding-bottom: 50px;
+}
+
+/* --- Background Layers (Restored Original) --- */
+.bg-lighting {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 50% 50%, var(--navy-center) 0%, var(--navy-edge) 80%);
+    z-index: -2;
+}
+
+.bg-grid-layer {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 32px 32px;
+    z-index: -1;
+}
+
+/* --- Layout Container --- */
+.app-container {
+    width: 100%;
+    padding: 2vw; /* スマホ・PCともに画面端からの余白を取る */
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+}
+
+/* --- Frame Navigation --- */
+.frame-nav {
+    position: absolute;
+    top: -25px; /* フレームの肩の少し上の位置 */
+    left: 0;
+    width: 100%;
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5px;
+}
+
+.nav-link {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 0 #000;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+.nav-link:hover {
+    color: var(--gold);
+    transform: translateY(-2px) scale(1.1);
+}
+
+.nav-link:active {
+    transform: translateY(1px) scale(0.95);
+}
+
+/* スマホ用のナビゲーション調整 */
+@media (max-width: 600px) {
+    .frame-nav {
+        top: -20px;
+        padding: 0 10px;
+    }
+    .nav-link {
+        font-size: 0.9rem;
+    }
+}
+
+/* --- 冒険の書フレーム（ピクセルアート風・純CSS） --- */
+.adventure-log-frame {
+    /* メインロゴの色をベースにしたカラーパレット */
+    --color-lightblue: #2e90db;     /* 外側の枠色（少し暗く・細く） */
+    --color-navy: #000c1e;          /* 内側の縁取り・背景 */
+    --color-orange: #cc7a00;        /* アクセントカラー（少し暗く・太く） */
+    
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 110px auto 40px; /* 上部にロゴがはみ出すスペースを確保 */
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 30px 40px; /* 四隅の装飾や枠線を避けて内側に余白 */
+    
+    /* ベース背景（グラデーションとグリッドと四隅のビス） */
+    background-color: var(--color-navy);
+    background-image: 
+        /* 4隅のビス（オレンジのドットアイコンとして） */
+        linear-gradient(var(--color-orange), var(--color-orange)),
+        linear-gradient(var(--color-orange), var(--color-orange)),
+        linear-gradient(var(--color-orange), var(--color-orange)),
+        linear-gradient(var(--color-orange), var(--color-orange)),
+        /* 透かしグリッド線 */
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+        /* 中央が明るいグラデーション */
+        radial-gradient(circle at 50% 50%, var(--navy-center) 0%, var(--color-navy) 90%);
+        
+    /* ビスのサイズとグリッドのサイズ */
+    background-size: 
+        12px 12px, 12px 12px, 12px 12px, 12px 12px,
+        32px 32px, 32px 32px,
+        100% 100%;
+        
+    /* ビスの配置（角の枠線と枠線の間にピッタリ配置）とその他の配置 */
+    /* 14pxは、外枠4px + 紺枠6px + 余白 の計算から良い位置を探したもの */
+    background-position: 
+        14px 14px, 
+        calc(100% - 14px) 14px, 
+        14px calc(100% - 14px), 
+        calc(100% - 14px) calc(100% - 14px),
+        0 0, 0 0, 0 0;
+        
+    background-repeat: 
+        no-repeat, no-repeat, no-repeat, no-repeat, 
+        repeat, repeat, 
+        no-repeat;
+
+    /* フレームのエッジ（RPGの多重ラインを再現） */
+    border: 3px solid var(--color-lightblue); /* 一番外側の線（4pxから3pxに細く） */
+    border-radius: 8px; /* 少しだけ丸みを持たせるのが最近のレトロスタイル */
+    
+    /* 複数の影を使って、内側の多層フレームと、外側のドロップシャドウをピクセル風に表現 */
+    box-shadow: 
+        inset 0 0 0 6px var(--color-navy),      /* 外から2番目：濃い紺の隙間 */
+        inset 0 0 0 12px var(--color-orange),   /* 外から3番目：オレンジの枠線（10pxから12pxに太く） */
+        inset 0 0 0 18px var(--color-navy),     /* 外から4番目：濃い紺の隙間2（16pxから18pxに太く） */
+        0 8px 0 rgba(0, 0, 0, 0.5);             /* 外側の立体的な落ち影 */
+        
+    z-index: 1;
+}
+
+/* スマホ用のフレーム微調整 */
+@media (max-width: 600px) {
+    .adventure-log-frame {
+        padding: 10px 15px 30px; 
+        margin: 80px auto 20px;
+        
+        border-width: 3px;
+        box-shadow: 
+            inset 0 0 0 4px var(--color-navy),
+            inset 0 0 0 7px var(--color-orange),
+            inset 0 0 0 11px var(--color-navy),
+            0 6px 0 rgba(0, 0, 0, 0.5);
+            
+        /* ビスの位置をスマホ向けに変更された枠線幅に合わせて内側へ */
+        background-position: 
+            9px 9px, 
+            calc(100% - 9px) 9px, 
+            9px calc(100% - 9px), 
+            calc(100% - 9px) calc(100% - 9px),
+            0 0, 0 0, 0 0;
+            
+        background-size: 
+            8px 8px, 8px 8px, 8px 8px, 8px 8px,
+            32px 32px, 32px 32px,
+            100% 100%;
+    }
+}
+
+.logo-side-image {
+    width: 160px; 
+    flex-shrink: 0;
+    transform: translateY(100%); /* 今の配置の下部が上部になるように下へ移動 */
+    position: relative; /* 子要素の絶対配置の基準にする */
+}
+
+/* Blinking Tag above side images */
+.blinking-tag {
+    position: absolute;
+    bottom: 100%; /* アイコンの上に配置 */
+    margin-bottom: 5px; 
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+    color: #ff3e3e;
+    font-weight: bold;
+    text-shadow: 2px 2px 0 #fff;
+    animation: blinkText 0.8s step-end infinite;
+    white-space: nowrap; /* brタグでの改行のみを許可 */
+    text-align: center;
+    line-height: 1.2;
+    z-index: 5;
+}
+
+@keyframes blinkText {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* --- Logo Area --- */
+.logo-area {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px; 
+    margin-top: -150px; /* 上部フレームに重なるよう位置を上げる（もう少し上に移動） */
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* 画像とロゴの間の余白 */
+}
+
+/* 添付画像のサイドエリア（PC版のみ左右に表示） */
+.logo-side-image img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
+}
+
+.logo-wrapper {
+    display: block;
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+}
+
+.main-logo {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
+    transition: transform 0.3s ease;
+    opacity: 0;
+    animation: fadeInLogo 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards, pixelSparkle 3s steps(2, end) infinite 1.2s;
+}
+.main-logo:hover {
+    transform: scale(1.02);
+}
+
+@keyframes fadeInLogo {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pixelSparkle {
+    0% { filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)) brightness(1); }
+    10% { filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6)) brightness(1.2) contrast(1.1); }
+    20% { filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)) brightness(1); }
+    60% { filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)) brightness(1); }
+    70% { filter: drop-shadow(0 0 15px rgba(255, 155, 0, 0.6)) brightness(1.3); }
+    80% { filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)) brightness(1); }
+    100% { filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)) brightness(1); }
+}
+
+/* Pixel Art Stars */
+.pixel-star {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    opacity: 0;
+    z-index: 11;
+    pointer-events: none;
+}
+.pixel-star.star-1 {
+    top: 5%;
+    left: 10%;
+    background: #fff;
+    box-shadow: -6px 0 0 #fff, 6px 0 0 #fff, 0 -6px 0 #fff, 0 6px 0 #fff;
+    animation: starTwinkle 2.1s steps(2) infinite 1.5s;
+}
+.pixel-star.star-2 {
+    bottom: 25%;
+    right: 5%;
+    background: var(--gold);
+    box-shadow: -6px 0 0 var(--gold), 6px 0 0 var(--gold), 0 -6px 0 var(--gold), 0 6px 0 var(--gold);
+    animation: starTwinkle 2.5s steps(2) infinite 2s;
+}
+.pixel-star.star-3 {
+    top: 35%;
+    right: 15%;
+    background: var(--color-lightblue, #48b2ff);
+    box-shadow: -6px 0 0 var(--color-lightblue, #48b2ff), 6px 0 0 var(--color-lightblue, #48b2ff), 0 -6px 0 var(--color-lightblue, #48b2ff), 0 6px 0 var(--color-lightblue, #48b2ff);
+    animation: starTwinkle 2.3s steps(2) infinite 1.8s;
+}
+
+@keyframes starTwinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    10% { opacity: 1; transform: scale(1.2); }
+    20% { opacity: 0; transform: scale(0.5); }
+}
+
+/* --- Menu Grid Layout --- */
+.menu-layout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* 隙間が広くなりすぎるのを防ぐため、gapを小さくしてキュッとさせる */
+    gap: 15px 20px; 
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Panel Containers */
+.pixel-panel {
+    display: block;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+}
+
+.panel-left, .panel-right {
+    width: 380px;
+    max-width: 100%;
+}
+.panel-center {
+    width: 460px; /* 少し小さめに */
+    max-width: 100%;
+    /* 重なりを強くして密集感を出す */
+    margin-top: -40px; 
+    z-index: 5;
+}
+
+/* Explicit Image Settings */
+.panel-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
+    transition: filter 0.2s, transform 0.2s;
+}
+
+/* Hover Interactivity */
+.pixel-panel:hover {
+    transform: translateY(-5px) scale(1.02);
+    z-index: 10;
+}
+.pixel-panel:hover .panel-image {
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.9)) brightness(1.1);
+}
+.pixel-panel:active {
+    transform: translateY(2px) scale(0.98);
+}
+
+/* --- Call To Action Button --- */
+.cta-area {
+    margin: 20px 0 10px; /* PC版でもQ&Aとの隙間を詰める */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.cta-subtext-container {
+    display: inline-block;
+    position: relative;
+    margin-top: 20px; /* PC版ではボタンのすぐ下に配置 */
+}
+.emphasis-tag {
+    position: absolute;
+    top: -22px;
+    left: -35px;
+    background-color: #e60000;
+    color: #fff;
+    font-size: 0.9rem;
+    padding: 2px 8px;
+    border: 2px solid #fff;
+    box-shadow: 3px 3px 0 #000;
+    transform: rotate(-12deg);
+    z-index: 2;
+    font-weight: bold;
+    white-space: nowrap;
+}
+.cta-subtext {
+    margin-top: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--gold);
+    text-shadow: 1px 1px 0 #000;
+}
+.pixel-btn {
+    display: inline-block;
+    background-color: var(--navy-edge);
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 15px 40px;
+    border: 4px solid #fff;
+    box-shadow: 
+        inset 0 0 0 4px #d45b00, /* Matching the orange border feel */
+        4px 4px 0 #000,
+        0 0 20px rgba(255,255,255,0.2);
+    border-radius: 8px;
+    text-shadow: 2px 2px 0 #000;
+    transition: all 0.1s;
+}
+.pixel-btn:hover {
+    background-color: #d45b00;
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 
+        inset 0 0 0 4px #ff9b00,
+        6px 6px 0 #000,
+        0 0 30px rgba(255, 255, 255, 0.4);
+}
+.pixel-btn:active {
+    transform: translateY(2px);
+    box-shadow: 
+        inset 0 0 0 4px #ff9b00,
+        2px 2px 0 #000;
+}
+
+/* --- Contact Area Bottom --- */
+.bottom-content {
+    margin-top: 30px;
+    font-size: 1.1rem;
+    color: var(--gold);
+    text-shadow: 1px 1px 0 #000;
+}
+.bracket-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.8;
+}
+.bracket {
+    display: inline-block;
+    width: 20px; height: 30px;
+    border: 4px solid var(--gold);
+}
+.bracket:first-child { border-right: none; }
+.bracket:last-child { border-left: none; }
+
+/* --- SNS Links --- */
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.sns-btn {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 30px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: 4px solid #fff;
+    position: relative;
+    transition: all 0.2s;
+    /* 多重ボーダーでファミコン感を演出 */
+    box-shadow: 
+        0 0 0 4px var(--navy-edge),
+        0 0 0 8px #fff,
+        0 8px 0 rgba(0, 0, 0, 0.5);
+    margin: 10px;
+    border-radius: 4px;
+}
+
+.sns-btn:active {
+    transform: translateY(4px);
+    box-shadow: 
+        0 0 0 4px var(--navy-edge),
+        0 0 0 8px #fff,
+        0 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.line-btn {
+    background-color: #06C755;
+    text-shadow: 2px 2px 0 #005a27;
+}
+
+.line-btn:hover {
+    background-color: #07e664;
+    border-color: #fff;
+    box-shadow: 
+        0 0 0 4px var(--navy-edge),
+        0 0 0 8px var(--gold),
+        0 12px 0 rgba(0, 0, 0, 0.6);
+    transform: translateY(-4px);
+}
+
+.insta-btn {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    text-shadow: 2px 2px 0 #8a004d;
+}
+
+.insta-btn:hover {
+    filter: brightness(1.1);
+    box-shadow: 
+        0 0 0 4px var(--navy-edge),
+        0 0 0 8px var(--gold),
+        0 12px 0 rgba(0, 0, 0, 0.6);
+    transform: translateY(-4px);
+}
+
+.sns-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sns-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: #fff;
+    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.3));
+}
+
+.sns-label {
+    white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+    .contact-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    .sns-btn {
+        width: 100%;
+        max-width: 320px;
+        justify-content: center;
+    }
+}
+
+/* --- Q&A Section (RPG Style) --- */
+.qa-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 40px; /* 上部の余白を削除 */
+    padding: 0 20px;
+}
+
+.qa-item {
+    margin-bottom: 25px;
+}
+
+.qa-question {
+    position: relative;
+    background-color: var(--navy-edge);
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 15px 20px;
+    border: 4px solid #fff;
+    /* 多重ボーダーでファミコン感を演出 */
+    box-shadow: 
+        0 0 0 4px var(--navy-edge),
+        0 0 0 8px #fff;
+    margin: 10px; /* ボックスシャドウの分を確保 */
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+/* 吹き出しのしっぽ（ドット風） */
+.qa-question::after {
+    content: "";
+    position: absolute;
+    bottom: -16px;
+    left: 40px;
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    box-shadow: 
+        -4px -4px 0 0 #fff,
+        4px -4px 0 0 #fff,
+        0 4px 0 0 #fff;
+}
+
+.qa-question:hover {
+    background-color: #002d6a;
+    transform: translateY(-2px);
+}
+
+.qa-item.active .qa-question {
+    border-color: var(--gold);
+    box-shadow: 
+        0 0 0 4px var(--navy-edge),
+        0 0 0 8px var(--gold);
+}
+.qa-item.active .qa-question::after {
+    background-color: var(--gold);
+    box-shadow: 
+        -4px -4px 0 0 var(--gold),
+        4px -4px 0 0 var(--gold),
+        0 4px 0 0 var(--gold);
+}
+
+.qa-answer {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 4px solid var(--gold);
+    margin: 20px 20px 20px 40px;
+    padding: 0 20px;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #e0e0e0;
+}
+
+.qa-item.active .qa-answer {
+    max-height: 1500px; /* 内容に合わせて十分な高さを */
+    opacity: 1;
+    padding: 20px;
+}
+
+/* --- Profile Section --- */
+.profile-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 60px auto 20px;
+    padding: 0 20px;
+}
+
+.profile-card {
+    background-color: var(--navy-edge);
+    border: 4px solid #fff;
+    padding: 30px;
+    position: relative;
+    box-shadow: 
+        inset 0 0 0 4px #cc7a00, /* var(--color-orange) の色 */
+        8px 8px 0 rgba(0,0,0,0.5);
+    margin-top: 20px;
+}
+
+.profile-header {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    background-color: #001d4a; /* var(--navy-center) の色 */
+    border: 4px solid #2e90db; /* var(--color-lightblue) の色 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    font-size: 3rem;
+    box-shadow: inset 6px 6px 0 rgba(0,0,0,0.3);
+}
+
+.profile-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: auto;
+    filter: drop-shadow(0 4px 4px rgba(0,0,0,0.3));
+}
+
+/* --- Footer --- */
+.pixel-footer {
+    width: 100%;
+    text-align: center;
+    padding: 40px 0 20px;
+    margin-top: 20px;
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.pixel-footer p {
+    font-size: 0.9rem;
+    color: var(--gold);
+    opacity: 0.8;
+    letter-spacing: 2px;
+}
+
+.profile-status {
+    flex-grow: 1;
+}
+
+.representative-name {
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.representative-role {
+    font-size: 1rem;
+    color: #fff;
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+.status-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.stat-item {
+    display: flex;
+    gap: 15px;
+    font-size: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 5px;
+}
+
+.stat-label {
+    color: #2e90db; /* var(--color-lightblue) の色 */
+    font-weight: bold;
+    width: 70px;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    color: #fff;
+}
+
+.profile-message-box {
+    background: rgba(0, 0, 0, 0.4);
+    border: 3px solid #fff;
+    padding: 20px;
+    position: relative;
+    box-shadow: inset 4px 4px 0 rgba(0,0,0,0.2);
+}
+
+.profile-message {
+    font-size: 1.1rem;
+    line-height: 2;
+    color: #e0e0e0;
+    text-align: justify;
+}
+
+/* スマホ用プロフィール調整 */
+@media (max-width: 700px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+    }
+    .stat-item {
+        justify-content: center;
+    }
+    .stat-label {
+        width: auto;
+    }
+    .profile-message {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+}
+
+/* --- Portfolio Section --- */
+.portfolio-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 40px auto 80px auto; /* Increased bottom margin */
+    padding: 0 20px;
+}
+
+.portfolio-section .section-title {
+    margin-bottom: 30px;
+}
+
+.portfolio-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.portfolio-card {
+    display: flex;
+    align-items: center;
+    background-color: var(--navy-edge);
+    border: 2px solid #fff;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.2s;
+    position: relative;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+}
+
+.card-arrow {
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-right: 15px;
+    opacity: 0;
+    transform: translateX(-5px);
+    transition: all 0.2s;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    flex: 1;
+}
+
+/* Hover Effects */
+.portfolio-card:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--gold);
+    transform: translateX(5px);
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.6);
+}
+
+.portfolio-card:hover .card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+    animation: cursorBlink 0.6s steps(2, start) infinite;
+}
+
+.portfolio-card:active {
+    transform: translateX(2px) translateY(2px);
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+
+@keyframes cursorBlink {
+    to { visibility: hidden; }
+}
+
+/* Responsive adjustment for portfolio items */
+@media (max-width: 600px) {
+    .portfolio-card {
+        padding: 12px 15px;
+    }
+    .card-title {
+        font-size: 0.95rem;
+    }
+}
+
+/* --- Floating Animations --- */
+@keyframes hoverFloat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
+}
+.animation-float {
+    animation: hoverFloat 6s ease-in-out infinite;
+}
+.animation-float-delayed {
+    animation: hoverFloat 6s ease-in-out infinite 2s;
+}
+.animation-float-delayed2 {
+    animation: hoverFloat 6s ease-in-out infinite 4s;
+}
+
+/* Stop animation on hover so it doesn't conflict with interaction */
+.pixel-panel:hover {
+    animation-play-state: paused;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 850px) {
+    .logo-side-image {
+        display: block;
+        width: 18%; /* 比率で指定してはみ出しを防止 */
+        max-width: 80px;
+        transform: translateY(120%); /* 少し下に下げる調整（PC版は100%） */
+    }
+    .logo-area {
+        margin-top: -115px;
+        gap: 5px; /* 間隔を狭める */
+    }
+    .logo-wrapper {
+        width: 55%;
+    }
+    .menu-layout {
+        flex-direction: row;
+        justify-content: center;
+        gap: 8px 10px; /* PC版より狭める */
+    }
+    .panel-left, .panel-right {
+        width: calc(50% - 10px); /* ギャップを考慮して収まるように */
+    }
+    .panel-center {
+        width: 70%;
+        margin-top: -20px;
+        z-index: 5;
+    }
+    .cta-area {
+        margin-bottom: 10px; /* スマホ版ではQ&Aとの隙間を詰める */
+    }
+    .cta-subtext-container {
+        margin-top: 35px; /* ボタンとの距離を少し保ちつつQ&Aへ寄せる */
+    }
+    .qa-section {
+        margin-top: 0; /* Q&A上部の余白を削除 */
+    }
+}
+
+@media (max-width: 500px) {
+    .logo-side-image {
+        width: 15%;
+    }
+    .logo-wrapper {
+        width: 65%;
+    }
+    .panel-left, .panel-right {
+        width: calc(50% - 8px);
+    }
+    .panel-center {
+        width: 85%;
+        margin-top: -30px;
+    }
+    .pixel-btn {
+        font-size: 1.1rem;
+        padding: 10px 15px;
+    }
+}
+
+/* --- Treasure Area (Easter Egg) --- */
+.treasure-area {
+    margin: 40px auto;
+    text-align: center;
+    position: relative;
+    max-width: 600px;
+    padding: 0 20px;
+}
+
+.chest-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 20px;
+}
+
+.chest {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+    user-select: none;
+    /* Basic pixel style shadow */
+    filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.5));
+}
+
+.chest:hover {
+    transform: translateY(-5px);
+}
+
+.chest:active {
+    transform: translateY(2px);
+}
+
+.chest-lid {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    width: 50px;
+    height: 20px;
+    background-color: #c97116;
+    border: 4px solid #fff;
+    border-radius: 8px 8px 0 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: bottom center;
+    box-shadow: inset 0 -4px 0 rgba(0,0,0,0.2);
+}
+
+.chest-base {
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+    width: 50px;
+    height: 20px;
+    background-color: #a85d12;
+    border: 4px solid #fff;
+    border-top: none;
+    box-shadow: inset 0 -4px 0 rgba(0,0,0,0.2);
+}
+
+.chest-lock {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: 10px;
+    height: 10px;
+    background-color: #ffcc00;
+    border: 2px solid #000;
+    transition: opacity 0.3s;
+}
+
+/* Chest States */
+.chest.open .chest-lid {
+    transform: rotateX(180deg) translateY(-20px);
+    opacity: 0;
+}
+
+.chest.open .chest-lock {
+    opacity: 0;
+}
+
+.chest.open::after {
+    content: "✨";
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-size: 1.5rem;
+    animation: floatItem 1s ease-out forwards;
+}
+
+/* Shake Animation for Sturdy Chest */
+.chest.shake {
+    animation: chestShake 0.3s ease-in-out;
+}
+
+@keyframes chestShake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px) rotate(-5deg); }
+    50% { transform: translateX(5px) rotate(5deg); }
+    75% { transform: translateX(-5px) rotate(-5deg); }
+    100% { transform: translateX(0); }
+}
+
+/* Float item animation */
+@keyframes floatItem {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-30px); opacity: 0; }
+}
+
+/* Mimic Reveal State */
+.chest.mimic-revealed .chest-lid {
+    transform: rotateX(45deg);
+    background-color: #800000;
+    border-color: #ff0000;
+}
+
+.chest.mimic-revealed .chest-base {
+    background-color: #4d0000;
+    border-color: #ff0000;
+}
+
+.chest.mimic-revealed .chest-lock {
+    background-color: #fff;
+    border-color: #000;
+    width: 14px;
+    height: 6px;
+    top: 28px;
+    left: 23px;
+    /* Looks like teeth */
+    box-shadow: inset 0 -3px 0 #000, 0 6px 0 #fff, 0 6px 0 inset #000;
+}
+
+.chest.mimic-revealed::after {
+    content: "👁️";
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    font-size: 1.2rem;
+    z-index: 2;
+    animation: none;
+}
+
+/* Image Chest Styles */
+.img-chest .chest-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+.img-chest.open .closed-img,
+.img-chest.mimic-revealed .closed-img {
+    display: none;
+}
+.img-chest.open .open-img,
+.img-chest.mimic-revealed .open-img {
+    display: block !important;
+}
+.img-chest.mimic-revealed::after {
+    display: none !important; /* Hide the CSS eye emoji for the image mimic chest */
+}
+
+/* Message Box */
+.treasure-message-box {
+    background-color: #000;
+    border: 4px solid #fff;
+    padding: 15px 20px;
+    border-radius: 4px;
+    box-shadow: 
+        0 0 0 4px #000,
+        0 0 0 8px #fff,
+        0 8px 0 rgba(0,0,0,0.5);
+    margin-top: 0;
+    display: none;
+    min-width: 250px;
+    max-width: 90vw;
+    animation: fadeInMessage 0.3s ease-out forwards;
+    position: absolute;
+    z-index: 1000;
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+
+.treasure-text {
+    font-size: 1.2rem;
+    color: #fff;
+    text-shadow: 2px 2px 0 #000;
+    margin: 0;
+    text-align: left;
+}
+
+@keyframes fadeInMessage {
+    from { opacity: 0; transform: translate(-50%, 10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@media (max-width: 600px) {
+    .chest-container {
+        gap: 20px;
+    }
+    .treasure-text {
+        font-size: 1rem;
+    }
+}
+
+/* --- Chest Layout Adjustments --- */
+.panel-center-wrapper {
+    display: flex;
+    align-items: flex-end; /* Align bottom to match panel */
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    margin-top: -40px; /* Preserve the overlapping effect of the center panel */
+    z-index: 5;
+}
+
+.panel-center-wrapper .panel-center {
+    margin-top: 0; /* Remove negative margin on the child, handled by layout if needed */
+}
+
+/* Make face-left flip horizontally so it faces inward */
+.face-left {
+    transform: scaleX(-1);
+}
+
+.chest-portfolio {
+    position: absolute;
+    right: 30px;
+    bottom: -80px; /* Move further down to avoid overlapping */
+    z-index: 10;
+}
+
+@media (max-width: 900px) {
+    .chest-portfolio {
+        right: 20px;
+        bottom: -70px;
+    }
+}
+
+/* --- Back to Top Button --- */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: auto;
+    z-index: 1000;
+    opacity: 0.6;
+    transition: opacity 0.3s, transform 0.3s;
+    display: none; /* Hidden by default via JS */
+}
+
+.back-to-top:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.back-to-top img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    image-rendering: pixelated;
+    filter: drop-shadow(2px 2px 0 #000);
+}
+
+@media (max-width: 600px) {
+    .back-to-top {
+        width: 45px;
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 700px) {
+    .panel-center-wrapper {
+        margin-top: -20px;
+        flex-direction: column-reverse; /* Put chest below the panel on small screens */
+        align-items: center;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 500px) {
+    .panel-center-wrapper {
+        margin-top: -30px;
+    }
+}

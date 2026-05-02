@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サンプル理髪店 | Sample Barber Shop</title>
+    <meta name="description" content="サンプル理髪店のレイアウトサンプルです。">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Shippori+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="sample-barber.css">
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <span class="logo-jp">サンプル理髪店</span>
+                <span class="logo-en">SAMPLE BARBER SHOP</span>
+            </a>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#access">Access</a></li>
+                </ul>
+                <a href="#contact" class="btn-reserve">ご予約</a>
+            </nav>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <img src="assets/barber-hero.png" alt="クラシックな理髪店の内装">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <p class="hero-subtitle parallax-text">TRADITIONAL GROOMING</p>
+            <h2 class="hero-title parallax-text">ひたむきに、真面目に、丁寧に。</h2>
+            <div class="scroll-indicator">
+                <span>SCROLL</span>
+                <div class="line"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aboutセクション -->
+    <section class="section about" id="about">
+        <div class="container layout-flex">
+            <div class="about-text fade-element">
+                <h3 class="section-title">
+                    <span class="en">About</span>
+                    <span class="jp">こだわり</span>
+                </h3>
+                <p class="lead">髪を切らなきゃ…そんな日を、<br>髪を切りたい！そんな日に。</p>
+                <p class="desc">
+                    サンプル理髪店は、王道のスタイルから最新のトレンドまで、お客様の魅力を最大限に引き立てる技術を提供します。<br>
+                    まぁサンプルですが<br>
+                    ただ、お客様の身嗜みを整える事だけを考え、丁寧に施術いたします。<br>まぁサンプルですが
+                </p>
+            </div>
+            <div class="about-visual fade-element delayed">
+                <div class="visual-placeholder">
+                    <!-- CSSでクラシックな模様や色付けを設定 -->
+                    <div class="ornament"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menuセクション -->
+    <section class="section menu" id="menu">
+        <div class="container">
+            <div class="fade-element">
+                <h3 class="section-title center">
+                    <span class="en">Menu</span>
+                    <span class="jp">メニュー・料金</span>
+                </h3>
+                <p class="menu-note">※金額は全て税別価格です。<br>※ご紹介の無い新規のお客様のご予約は、直近の１週間以内とさせていただいております。</p>
+            </div>
+            
+            <div class="menu-list fade-element">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h4 class="menu-name">スタンダード カット</h4>
+                        <p class="menu-detail">カット・シャンプー・シェービング・ブロー</p>
+                    </div>
+                    <div class="menu-price">¥4,500</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h4 class="menu-name">カット ＆ カラー</h4>
+                        <p class="menu-detail">フルカラーリング・カット・シャンプー・ブロー</p>
+                    </div>
+                    <div class="menu-price">¥8,000〜</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h4 class="menu-name">パーマ スタイル</h4>
+                        <p class="menu-detail">デザインパーマ・カット・シャンプー・ブロー</p>
+                    </div>
+                    <div class="menu-price">¥9,500〜</div>
+                </div>
+                 <div class="menu-item">
+                    <div class="menu-item-info">
+                        <h4 class="menu-name">プレミアム シェービング</h4>
+                        <p class="menu-detail">顔剃り・フェイシャルマッサージ・パック</p>
+                    </div>
+                    <div class="menu-price">¥3,000</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ギャラリー（Photo）セクション -->
+    <section class="section gallery" id="gallery">
+        <div class="container">
+            <div class="fade-element">
+                <h3 class="section-title center">
+                    <span class="en">Photo</span>
+                    <span class="jp">ギャラリー</span>
+                </h3>
+            </div>
+            <div class="gallery-grid fade-element delayed">
+                <div class="gallery-item item-1">
+                    <span class="placeholder-text">ここに画像を追加できます</span>
+                </div>
+                <div class="gallery-item item-2">
+                    <span class="placeholder-text">ここに画像を追加できます</span>
+                </div>
+                <div class="gallery-item item-3">
+                    <span class="placeholder-text">ここに画像を追加できます</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Access & Footer -->
+    <section class="section access" id="access">
+        <div class="container layout-flex reverse">
+            <div class="access-info fade-element">
+                <h3 class="section-title">
+                    <span class="en">Access</span>
+                    <span class="jp">アクセス・店舗情報</span>
+                </h3>
+                <dl class="info-list">
+                    <dt>住所</dt>
+                    <dd>〒000-0000<br>愛知県豊田市サンプル町1-2-3</dd>
+                    <dt>電話番号</dt>
+                    <dd><a href="tel:0000000000" class="tel-link">000-000-0000</a></dd>
+                    <dt>営業時間</dt>
+                    <dd>平日 10:00 - 20:00<br>土日祝 9:00 - 19:00</dd>
+                    <dt>定休日</dt>
+                    <dd>毎週月曜日・第2第3火曜日</dd>
+                </dl>
+            </div>
+            <div class="access-map fade-element delayed">
+                <!-- マッププレースホルダー -->
+                <div class="map-placeholder">
+                    <p>Map Placeholder</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="contact">
+        <div class="footer-contact">
+            <p>ご予約・お問い合わせ</p>
+            <a href="#" class="btn-reserve large">WEBご予約フォーム</a>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 サンプル理髪店 All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- スクロールアニメーション用の簡単なJS -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const fadeElements = document.querySelectorAll('.fade-element');
+            const parallaxTexts = document.querySelectorAll('.parallax-text');
+            const header = document.querySelector('.header');
+
+            const onScroll = () => {
+                const scrollY = window.scrollY;
+                
+                // ヘッダー背景をスクロールで変更
+                if (scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+
+                // ヒーローテキストのパララックス
+                parallaxTexts.forEach(el => {
+                    el.style.transform = `translateY(${scrollY * 0.4}px)`;
+                    el.style.opacity = 1 - (scrollY / 400);
+                });
+
+                // フェードインアニメーション
+                fadeElements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.8) {
+                        el.classList.add('visible');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', onScroll);
+            onScroll(); // 初期チェック
+        });
+    </script>
+</body>
+</html>
