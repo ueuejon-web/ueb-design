@@ -1101,16 +1101,51 @@ body {
     object-fit: contain;
     image-rendering: pixelated;
 }
+.img-chest .chest-img {
+    z-index: 0;
+}
+.img-chest .blink-img,
+.img-chest .defeated-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 1;
+}
 .img-chest.open .closed-img,
-.img-chest.mimic-revealed .closed-img {
+.img-chest.mimic-revealed .closed-img,
+.img-chest.mimic-defeated .closed-img {
     display: none;
 }
 .img-chest.open .open-img,
 .img-chest.mimic-revealed .open-img {
     display: block !important;
 }
+.img-chest.mimic-attacking .blink-img {
+    display: block !important;
+    animation: chestBlink 0.5s steps(5, start) forwards;
+}
+.img-chest.mimic-defeated .open-img {
+    display: none !important;
+}
+.img-chest.mimic-defeated .defeated-img {
+    display: block !important;
+}
 .img-chest.mimic-revealed::after {
     display: none !important; /* Hide the CSS eye emoji for the image mimic chest */
+}
+.img-chest.mimic-defeated::after {
+    content: "☠️";
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    z-index: 2;
+}
+@keyframes chestBlink {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
 }
 
 /* Message Box */

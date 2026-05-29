@@ -1,0 +1,484 @@
+/* ==========================================================================
+   Flyer CSS (A4 Size, Light Retro Game Theme)
+   ========================================================================== */
+
+/* Font & Base reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'DotGothic16', 'Courier New', Courier, monospace;
+    background-color: #2c3e50; /* 画面確認時の背景色 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 0;
+}
+
+/* ==========================================================================
+   A4 Layout Container (for Web Preview)
+   ========================================================================== */
+.flyer-container {
+    width: 210mm;
+    height: 297mm;
+    background-color: #f7f4eb; /* レトロなクリーム色背景 */
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 12px 12px;
+    color: #2b2b2b;
+    padding: 10mm; /* A4に収めるため余白を縮小 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    border: 8px solid #000;
+}
+
+/* Custom Pixel border effect (Double Line style with corner pixels) */
+.flyer-container::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border: 2px solid #000;
+    pointer-events: none;
+    background-image: 
+        linear-gradient(#000, #000),
+        linear-gradient(#000, #000),
+        linear-gradient(#000, #000),
+        linear-gradient(#000, #000);
+    background-size: 8px 8px, 8px 8px, 8px 8px, 8px 8px;
+    background-position: 4px 4px, calc(100% - 4px) 4px, 4px calc(100% - 4px), calc(100% - 4px) calc(100% - 4px);
+    background-repeat: no-repeat;
+    z-index: 100;
+}
+
+/* ==========================================================================
+   Header Elements
+   ========================================================================== */
+.flyer-header {
+    text-align: center;
+    margin-bottom: 4mm; /* 余白縮小 */
+}
+
+.logo-area {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 4mm; /* 余白縮小 */
+    margin-bottom: 10mm; /* ロゴとテキストの間隔を拡大 */
+}
+
+.logo-side-image {
+    width: auto;
+    max-width: 50mm;
+    max-height: 58.5mm; /* ロゴの 0.9 倍サイズ */
+    flex-shrink: 0;
+    transform: translateY(-4mm);
+}
+
+.logo-side-image img {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    image-rendering: pixelated;
+}
+
+.logo-wrapper {
+    max-width: 108mm;
+}
+
+.main-logo {
+    width: 100%;
+    max-height: 65mm; /* 今の 1.2 倍に拡大 */
+    image-rendering: pixelated;
+}
+
+.speech-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4mm;
+    margin-bottom: 2mm;
+}
+
+.speech-side-image {
+    width: 20%;
+    max-width: 24mm;
+    height: auto;
+    image-rendering: pixelated;
+}
+
+.speech-bubble-welcome {
+    position: relative;
+    background-color: #fff;
+    border: 4px solid #000;
+    padding: 2mm 4mm; /* パディング縮小 */
+    display: inline-block;
+    margin: 0; /* 行内で調整 */
+    box-shadow: 4px 4px 0 #000;
+}
+
+/* Speech bubble tiny tail */
+.speech-bubble-welcome::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+}
+
+.speech-bubble-welcome::before {
+    content: '';
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: #000 transparent transparent transparent;
+    z-index: -1;
+}
+
+.welcome-text {
+    font-size: 18px; /* フォントサイズ縮小 */
+    font-weight: bold;
+    color: #c0392b; /* レトロレッド */
+}
+
+.lead-text {
+    font-size: 12px; /* フォントサイズ縮小 */
+    font-weight: bold;
+    color: #4a4a4a;
+    margin-top: 3mm; /* マージン縮小 */
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   Intro (Avatar & Message Box)
+   ========================================================================== */
+.intro-section {
+    display: flex;
+    align-items: stretch;
+    gap: 4mm; /* 余白縮小 */
+    margin-bottom: 4mm; /* 余白縮小 */
+}
+
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5mm;
+    width: 30mm; /* 幅を縮小 */
+    flex-shrink: 0;
+}
+
+.avatar-frame {
+    width: 30mm; /* サイズ縮小 */
+    height: 30mm;
+    border: 4px solid #000;
+    background-color: #fff;
+    padding: 1.5mm;
+    box-shadow: 4px 4px 0 #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+.intro-bubble {
+    background-color: #fff;
+    border: 4px solid #000;
+    padding: 3mm 4mm; /* パディング縮小 */
+    border-radius: 4px;
+    box-shadow: 4px 4px 0 #000;
+    line-height: 1.5;
+    font-size: 11.5px; /* フォントサイズ縮小 */
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+/* Side pointer for avatar speech */
+.intro-bubble::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 20px; /* 位置微調整 */
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent #000 transparent transparent;
+}
+
+.intro-bubble::after {
+    content: '';
+    position: absolute;
+    left: -14px;
+    top: 22px; /* 位置微調整 */
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent #fff transparent transparent;
+}
+
+/* ==========================================================================
+   Features Panel (Game Menu Style)
+   ========================================================================== */
+.features-section {
+    margin-bottom: 4mm; /* 余白縮小 */
+}
+
+.pixel-panel {
+    background-color: #fff;
+    border: 6px solid #000;
+    padding: 4mm 6mm; /* パディング縮小 */
+    box-shadow: 6px 6px 0 #000;
+    position: relative;
+}
+
+.panel-title {
+    font-size: 16px; /* フォントサイズ縮小 */
+    margin-bottom: 3mm; /* 余白縮小 */
+    color: #2980b9; /* レトロブルー */
+    border-bottom: 3px double #000;
+    padding-bottom: 1mm; /* 余白縮小 */
+    display: inline-block;
+}
+
+.feature-list {
+    list-style: none;
+}
+
+.feature-list li {
+    display: flex;
+    gap: 4mm;
+    margin-bottom: 3.5mm; /* 余白縮小 */
+    align-items: flex-start;
+}
+
+.feature-list li:last-child {
+    margin-bottom: 0;
+}
+
+.pixel-bullet {
+    color: #e67e22; /* レトロオレンジ */
+    font-size: 14px; /* フォントサイズ縮小 */
+    line-height: 1.2;
+    animation: blink 1s steps(2, start) infinite;
+}
+
+.feature-info strong {
+    font-size: 13.5px; /* フォントサイズ縮小 */
+    display: block;
+    margin-bottom: 1mm;
+    color: #000;
+}
+
+.feature-info p {
+    font-size: 11.5px; /* フォントサイズ縮小 */
+    line-height: 1.4;
+    color: #555;
+}
+
+/* ==========================================================================
+   Footer: QR and Call to Action
+   ========================================================================== */
+.flyer-footer {
+    border-top: 4px double #000;
+    padding-top: 4mm; /* 余白縮小 */
+}
+
+.footer-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4mm; /* 余白縮小 */
+}
+
+.qr-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.qr-code {
+    width: 30mm; /* QRコードの縮小 */
+    height: 30mm;
+    border: 4px solid #000;
+    padding: 1.5mm;
+    background-color: #fff;
+    box-shadow: 4px 4px 0 #000;
+}
+
+.qr-arrow {
+    font-size: 9.5px; /* フォントサイズ縮小 */
+    font-weight: bold;
+    margin-top: 1.5mm; /* マージン縮小 */
+    text-align: center;
+    color: #c0392b;
+}
+
+.adventure-box {
+    flex-grow: 1;
+}
+
+.highlight-panel {
+    border-color: #c0392b;
+    box-shadow: 6px 6px 0 #c0392b;
+    display: flex;
+    align-items: center;
+    gap: 4mm; /* 余白縮小 */
+    padding: 3mm; /* パディング縮小 */
+    background-color: #fffaf0;
+}
+
+.chest-graphic {
+    width: 14mm; /* 宝箱のサイズ縮小 */
+    height: 14mm;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.chest-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+    z-index: 2;
+}
+
+/* Sparkle Effects */
+.sparkle {
+    position: absolute;
+    font-size: 12px; /* サイズ縮小 */
+    color: #f1c40f;
+    text-shadow: 1px 1px 0 #000;
+    z-index: 3;
+    pointer-events: none;
+    animation: sparkleTwinkle 1.2s infinite alternate ease-in-out;
+}
+
+.sparkle-1 {
+    top: -4px;
+    left: -4px;
+    animation-delay: 0.2s;
+}
+
+.sparkle-2 {
+    bottom: -4px;
+    right: -4px;
+    animation-delay: 0.8s;
+}
+
+@keyframes sparkleTwinkle {
+    0% { transform: scale(0.6) translateY(0); opacity: 0.5; }
+    100% { transform: scale(1.2) translateY(-4px); opacity: 1; }
+}
+
+/* Mini Speech Bubble */
+.pixel-bubble-mini {
+    display: inline-block;
+    margin-bottom: 1.5mm; /* 余白縮小 */
+    border: 2px solid #000;
+    background-color: #fff;
+    padding: 1px 4px;
+    font-size: 9px; /* フォントサイズ縮小 */
+    font-weight: bold;
+    box-shadow: 2px 2px 0 #000;
+    color: #c0392b;
+    position: relative;
+}
+
+.adventure-text h3 {
+    font-size: 13.5px; /* フォントサイズ縮小 */
+    color: #c0392b;
+    margin-bottom: 1mm; /* 余白縮小 */
+}
+
+.adventure-text p {
+    font-size: 11px; /* フォントサイズ縮小 */
+    line-height: 1.4;
+    color: #4a4a4a;
+    margin-bottom: 1mm; /* 余白縮小 */
+}
+
+.site-url {
+    font-family: monospace;
+    font-size: 12px; /* フォントサイズ縮小 */
+    font-weight: bold;
+    color: #7f8c8d;
+}
+
+.copyright {
+    text-align: center;
+    font-size: 9px; /* フォントサイズ縮小 */
+    color: #7f8c8d;
+    margin-top: 3mm; /* 余白縮小 */
+}
+
+/* Animations */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ==========================================================================
+   Print Optimization (@media print)
+   ========================================================================== */
+@media print {
+    body {
+        background-color: #fff;
+        padding: 0;
+        margin: 0;
+        display: block;
+    }
+
+    .flyer-container {
+        width: 210mm;
+        height: 297mm;
+        box-shadow: none;
+        border: 8px solid #000;
+        padding: 12mm; /* 印刷時の余白微調整 */
+        margin: 0;
+        page-break-inside: avoid;
+        page-break-after: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* 背景グラフィックが印刷オフでも見えるようにボーダーとテキストを強調 */
+    .speech-bubble-welcome,
+    .avatar-frame,
+    .status-window,
+    .intro-bubble,
+    .pixel-panel,
+    .qr-code {
+        box-shadow: 4px 4px 0 #000 !important;
+    }
+
+    .highlight-panel {
+        box-shadow: 4px 4px 0 #c0392b !important;
+        border-color: #c0392b !important;
+    }
+}

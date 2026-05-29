@@ -99,8 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
         chest.addEventListener('click', function() {
             const type = this.getAttribute('data-type');
             
-            // If already open or revealed, do nothing
-            if (this.classList.contains('open') || this.classList.contains('mimic-revealed')) return;
+            // If already open or defeated, do nothing
+            if (this.classList.contains('open') || this.classList.contains('mimic-defeated')) return;
 
             if (type === 'normal') {
                 this.classList.add('open');
@@ -123,6 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             else if (type === 'mimic') {
+                // If already defeated, no further interaction
+                if (this.classList.contains('mimic-defeated')) return;
+
                 let clicks = parseInt(this.getAttribute('data-clicks')) || 0;
                 clicks++;
                 this.setAttribute('data-clicks', clicks);
@@ -133,9 +136,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     void this.offsetWidth; // trigger reflow
                     this.classList.add('shake');
                     showMessage('かたくて あかない！<br>もうすこし たたいてみよう。', this);
-                } else {
+                } else if (clicks === 3) {
                     this.classList.add('mimic-revealed');
-                    showMessage('なんと たからばこは ミミックだった！<br>たべられちゃう！', this);
+                    showMessage('なんと たからばこは ミミックだった！', this);
+                } else if (clicks <= 7) {
+                    this.classList.add('mimic-revealed');
+                    this.classList.add('mimic-attacking');
+                    this.classList.remove('shake');
+                    void this.offsetWidth;
+                    this.classList.add('shake');
+                    showMessage('１０ のダメージを あたえた！', this);
+                    setTimeout(() => {
+                        this.classList.remove('mimic-attacking');
+                    }, 500);
+                } else {
+                    this.classList.remove('mimic-revealed');
+                    this.classList.remove('mimic-attacking');
+                    this.classList.add('mimic-defeated');
+                    this.classList.add('open');
+                    showMessage('９９９ ダメージを あたえた！<br>ミミックを やっつけた！', this);
                 }
             }
         });
