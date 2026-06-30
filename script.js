@@ -53,6 +53,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // 3.5. Portfolio Accordion Logic
+    const portfolioHeaders = document.querySelectorAll('.portfolio-card-header');
+    portfolioHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const card = header.parentElement;
+            const isActive = card.classList.contains('active');
+            
+            // Close other portfolio cards when opening one
+            document.querySelectorAll('.portfolio-card').forEach(otherCard => {
+                otherCard.classList.remove('active');
+            });
+
+            if (!isActive) {
+                card.classList.add('active');
+            }
+        });
+    });
+
     // 4. Treasure Chest Easter Egg Logic
     const chests = document.querySelectorAll('.chest');
     const messageBox = document.getElementById('treasureMessage');
