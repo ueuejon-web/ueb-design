@@ -75,6 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const chests = document.querySelectorAll('.chest');
     const messageBox = document.getElementById('treasureMessage');
     const messageText = messageBox ? messageBox.querySelector('.treasure-text') : null;
+    const sturdyLockedSfx = new Audio('仕掛け作動2.mp3');
+    const mimicAlertSfx = new Audio('8bitアラート2.mp3');
+    const mimicDamageSfx = new Audio('8bitダメージ2.mp3');
+    const mimicRevealSfx = new Audio('8bit下降10.mp3');
+    const mimicExplodeSfx = new Audio('8bit爆発2.mp3');
+    const mimicDefeatSfx = new Audio('8bit下降6.mp3');
+    const rareItemSfx = new Audio('8bit獲得2.mp3');
+    const normalItemSfx = new Audio('8bit獲得8.mp3');
 
     if (messageBox) {
         messageBox.addEventListener('click', function() {
@@ -113,15 +121,126 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function playSturdyLockedSfx() {
+        sturdyLockedSfx.currentTime = 0;
+        sturdyLockedSfx.play().catch(() => {
+            // Ignore autoplay-related rejections in strict browser settings.
+        });
+    }
+
+    function playMimicHitSfxSequence(onDamageStart) {
+        mimicAlertSfx.currentTime = 0;
+        mimicDamageSfx.currentTime = 0;
+
+        let hasTriggeredDamageStart = false;
+        const triggerDamageStart = () => {
+            if (hasTriggeredDamageStart) return;
+            hasTriggeredDamageStart = true;
+            if (typeof onDamageStart === 'function') {
+                onDamageStart();
+            }
+        };
+
+        mimicAlertSfx
+            .play()
+            .then(() => new Promise(resolve => {
+                mimicAlertSfx.onended = () => {
+                    mimicAlertSfx.onended = null;
+                    resolve();
+                };
+            }))
+            .then(() => {
+                triggerDamageStart();
+                return mimicDamageSfx.play();
+            })
+            .catch(() => {
+                triggerDamageStart();
+                // Ignore autoplay-related rejections in strict browser settings.
+            });
+    }
+
+    function playMimicRevealSfx() {
+        mimicRevealSfx.currentTime = 0;
+        mimicRevealSfx.play().catch(() => {
+            // Ignore autoplay-related rejections in strict browser settings.
+        });
+    }
+
+    function playRareItemSfx() {
+        rareItemSfx.currentTime = 0;
+        rareItemSfx.play().catch(() => {
+            // Ignore autoplay-related rejections in strict browser settings.
+        });
+    }
+
+    function playNormalItemSfx() {
+        normalItemSfx.currentTime = 0;
+        normalItemSfx.play().catch(() => {
+            // Ignore autoplay-related rejections in strict browser settings.
+        });
+    }
+
+    function playMimicDefeatSfxSequence(onExplodeStart, onDefeatStart) {
+        mimicAlertSfx.currentTime = 0;
+        mimicExplodeSfx.currentTime = 0;
+        mimicDefeatSfx.currentTime = 0;
+
+        let hasTriggeredExplodeStart = false;
+        let hasTriggeredDefeatStart = false;
+        const triggerExplodeStart = () => {
+            if (hasTriggeredExplodeStart) return;
+            hasTriggeredExplodeStart = true;
+            if (typeof onExplodeStart === 'function') {
+                onExplodeStart();
+            }
+        };
+        const triggerDefeatStart = () => {
+            if (hasTriggeredDefeatStart) return;
+            hasTriggeredDefeatStart = true;
+            if (typeof onDefeatStart === 'function') {
+                onDefeatStart();
+            }
+        };
+
+        mimicAlertSfx
+            .play()
+            .then(() => new Promise(resolve => {
+                mimicAlertSfx.onended = () => {
+                    mimicAlertSfx.onended = null;
+                    resolve();
+                };
+            }))
+            .then(() => {
+                triggerExplodeStart();
+                return mimicExplodeSfx.play();
+            })
+            .then(() => new Promise(resolve => {
+                mimicExplodeSfx.onended = () => {
+                    mimicExplodeSfx.onended = null;
+                    resolve();
+                };
+            }))
+            .then(() => {
+                triggerDefeatStart();
+                return mimicDefeatSfx.play();
+            })
+            .catch(() => {
+                triggerExplodeStart();
+                triggerDefeatStart();
+                // Ignore autoplay-related rejections in strict browser settings.
+            });
+    }
+
     chests.forEach(chest => {
         chest.addEventListener('click', function() {
             const type = this.getAttribute('data-type');
             
             // If already open or defeated, do nothing
-            if (this.classList.contains('open') || this.classList.contains('mimic-defeated')) return;
+            if (this.classList.contains('open') || this.classList.contains('mimic-defeated') || this.classList.contains('mimic-defeating')) return;
 
             if (type === 'normal') {
                 this.classList.add('open');
+                playNormalItemSfx();
                 showMessage('100G を てにいれた！<br>やったね！', this);
             } 
             else if (type === 'sturdy') {
@@ -134,9 +253,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.classList.remove('shake');
                     void this.offsetWidth; // trigger reflow
                     this.classList.add('shake');
+                    playSturdyLockedSfx();
                     showMessage('かたくて あかない！<br>もうすこし たたいてみよう。', this);
                 } else {
                     this.classList.add('open');
+                    playRareItemSfx();
                     showMessage('レアアイテム を てにいれた！<br>ラッキー！', this);
                 }
             }
@@ -153,26 +274,44 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.classList.remove('shake');
                     void this.offsetWidth; // trigger reflow
                     this.classList.add('shake');
+                    playSturdyLockedSfx();
                     showMessage('かたくて あかない！<br>もうすこし たたいてみよう。', this);
                 } else if (clicks === 3) {
                     this.classList.add('mimic-revealed');
+                    playMimicRevealSfx();
                     showMessage('なんと たからばこは ミミックだった！', this);
                 } else if (clicks <= 7) {
-                    this.classList.add('mimic-revealed');
-                    this.classList.add('mimic-attacking');
-                    this.classList.remove('shake');
-                    void this.offsetWidth;
-                    this.classList.add('shake');
-                    showMessage('１０ のダメージを あたえた！', this);
-                    setTimeout(() => {
-                        this.classList.remove('mimic-attacking');
-                    }, 500);
+                    playMimicHitSfxSequence(() => {
+                        this.classList.add('mimic-revealed');
+                        this.classList.add('mimic-attacking');
+                        this.classList.remove('shake');
+                        void this.offsetWidth;
+                        this.classList.add('shake');
+                        showMessage('１０ のダメージを あたえた！', this);
+                        setTimeout(() => {
+                            this.classList.remove('mimic-attacking');
+                        }, 500);
+                    });
                 } else {
-                    this.classList.remove('mimic-revealed');
-                    this.classList.remove('mimic-attacking');
-                    this.classList.add('mimic-defeated');
-                    this.classList.add('open');
-                    showMessage('９９９ ダメージを あたえた！<br>ミミックを やっつけた！', this);
+                    this.classList.add('mimic-defeating');
+                    playMimicDefeatSfxSequence(() => {
+                        // Reuse the same hit flash/shake timing used by the 10-damage phase.
+                        this.classList.add('mimic-revealed');
+                        this.classList.add('mimic-attacking');
+                        this.classList.remove('shake');
+                        void this.offsetWidth;
+                        this.classList.add('shake');
+                        setTimeout(() => {
+                            this.classList.remove('mimic-attacking');
+                        }, 500);
+                    }, () => {
+                        this.classList.remove('mimic-revealed');
+                        this.classList.remove('mimic-attacking');
+                        this.classList.remove('mimic-defeating');
+                        this.classList.add('mimic-defeated');
+                        this.classList.add('open');
+                        showMessage('９９９ ダメージを あたえた！<br>ミミックを やっつけた！', this);
+                    });
                 }
             }
         });
