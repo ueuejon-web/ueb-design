@@ -941,11 +941,44 @@ body {
     }
 }
 @media (max-width: 600px) {
-    .portfolio-card {
+    /* セクション全体の左右余白を削減 */
+    .qa-section,
+    .portfolio-section {
+        padding: 0 10px;
+    }
+
+    /* Q&Aの質問部分の左右マージンとパディングを減らす */
+    .qa-question {
+        margin: 10px 4px;
         padding: 12px 15px;
+        font-size: 1.05rem;
+    }
+
+    /* Q&Aの回答部分の余白を削減し、展開時も広く表示 */
+    .qa-answer {
+        margin: 15px 5px 15px 10px;
+        padding: 0 10px;
+    }
+    .qa-item.active .qa-answer {
+        padding: 15px 10px;
+    }
+
+    /* 制作実績サンプルのカード余白調整 */
+    .portfolio-card {
+        padding: 0; /* 不要なpaddingをリセット */
+    }
+    .portfolio-card-header {
+        padding: 12px 12px;
     }
     .card-title {
         font-size: 0.95rem;
+    }
+    .portfolio-card.active .portfolio-card-body {
+        padding: 12px 12px;
+    }
+    .portfolio-card-desc {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
     }
 }
 
