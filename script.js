@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (href && href.startsWith('#')) {
                 const targetId = href.substring(1);
                 const targetElement = document.getElementById(targetId);
-                
+
                 if (targetElement && getComputedStyle(document.documentElement).scrollBehavior !== 'smooth') {
                     e.preventDefault();
                     targetElement.scrollIntoView({ behavior: 'smooth' });
@@ -38,10 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
     qaQuestions.forEach(question => {
         question.addEventListener('click', () => {
             const item = question.parentElement;
-            
+
             // Toggle current item
             const isActive = item.classList.contains('active');
-            
+
             // Optional: Close other items when opening one
             document.querySelectorAll('.qa-item').forEach(otherItem => {
                 otherItem.classList.remove('active');
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         header.addEventListener('click', () => {
             const card = header.parentElement;
             const isActive = card.classList.contains('active');
-            
+
             // Close other portfolio cards when opening one
             document.querySelectorAll('.portfolio-card').forEach(otherCard => {
                 otherCard.classList.remove('active');
@@ -84,8 +84,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const rareItemSfx = new Audio('8bit獲得2.mp3');
     const normalItemSfx = new Audio('8bit獲得8.mp3');
 
+    // 「仕掛け作動2.mp3」以外のSEの音量を80%下げる
+    mimicAlertSfx.volume = 0.2;
+    mimicDamageSfx.volume = 0.2;
+    mimicRevealSfx.volume = 0.2;
+    mimicExplodeSfx.volume = 0.2;
+    mimicDefeatSfx.volume = 0.2;
+    rareItemSfx.volume = 0.2;
+    normalItemSfx.volume = 0.2;
+
     if (messageBox) {
-        messageBox.addEventListener('click', function() {
+        messageBox.addEventListener('click', function () {
             this.style.display = 'none';
         });
     }
@@ -93,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showMessage(text, chestElement) {
         if (!messageBox || !messageText) return;
         messageText.innerHTML = text;
-        
+
         // Position message box below the clicked chest
         if (chestElement) {
             const rect = chestElement.getBoundingClientRect();
@@ -101,9 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
             messageBox.style.left = (rect.left + window.scrollX + (rect.width / 2)) + 'px';
             // Note: transform: translate(-50%, 0) is handled by CSS animation and base styles now
         }
-        
+
         messageBox.style.display = 'inline-block';
-        
+
         // Simple typewriter effect
         messageText.style.width = '0';
         messageText.style.overflow = 'hidden';
@@ -111,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         messageText.style.animation = 'none';
         void messageText.offsetWidth; // trigger reflow
         messageText.style.animation = 'typing 1s steps(20, end) forwards';
-        
+
         // Add typing animation to CSS dynamically if not present
         if (!document.getElementById('typing-anim')) {
             const style = document.createElement('style');
@@ -232,9 +241,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     chests.forEach(chest => {
-        chest.addEventListener('click', function() {
+        chest.addEventListener('click', function () {
             const type = this.getAttribute('data-type');
-            
+
             // If already open or defeated, do nothing
             if (this.classList.contains('open') || this.classList.contains('mimic-defeated') || this.classList.contains('mimic-defeating')) return;
 
@@ -242,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.classList.add('open');
                 playNormalItemSfx();
                 showMessage('100G を てにいれた！<br>やったね！', this);
-            } 
+            }
             else if (type === 'sturdy') {
                 let clicks = parseInt(this.getAttribute('data-clicks')) || 0;
                 clicks++;
